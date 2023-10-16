@@ -1,3 +1,2 @@
-const quais = require('./shims/quais-shim.js')
-
-module.exports = quais;
+import { pollFor } from './shims/quais-shim.js'
+export default pollFor

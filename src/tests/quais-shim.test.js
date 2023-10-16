@@ -1,6 +1,7 @@
-const quais = require('./../shims/quais-shim.js')
+import { pollFor } from './../shims/quais-shim.js'
+import { jest } from '@jest/globals'
 
-describe('quais.pollFor', () => {
+describe('pollFor', () => {
 	let quaisProvider
 	beforeEach(() => {
 		quaisProvider = {
@@ -20,7 +21,7 @@ describe('quais.pollFor', () => {
 		const expectedResult = 'some-receipt'
 		quaisProvider.getTransactionReceipt.mockResolvedValueOnce(expectedResult)
 
-		const result = await quais.pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
+		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
 
 		expect(result).toBe(expectedResult)
 		expect(quaisProvider.getTransactionReceipt).toHaveBeenCalledWith('0xValid')
@@ -32,20 +33,20 @@ describe('quais.pollFor', () => {
 			.mockRejectedValueOnce(new Error('Promise timeout'))
 			.mockResolvedValueOnce(expectedResult)
 
-		const result = await quais.pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
+		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
 
 		expect(result).toBe(expectedResult)
 		expect(quaisProvider.getTransactionReceipt).toHaveBeenCalledTimes(2)
 	})
 
 	test('throws error for invalid method name', async () => {
-		await expect(quais.pollFor(quaisProvider, 'invalidMethod', ['0xValid'], 1000, 30000)).rejects.toThrow(
+		await expect(pollFor(quaisProvider, 'invalidMethod', ['0xValid'], 1000, 30000)).rejects.toThrow(
 			'Invalid method: invalidMethod'
 		)
 	})
 
 	test('throws error for incorrect number of arguments', async () => {
-		await expect(quais.pollFor(quaisProvider, 'getTransactionReceipt', [], 1000, 30000)).rejects.toThrow(
+		await expect(pollFor(quaisProvider, 'getTransactionReceipt', [], 1000, 30000)).rejects.toThrow(
 			'Incorrect number of arguments provided.'
 		)
 	})
@@ -53,7 +54,7 @@ describe('quais.pollFor', () => {
 	test('gives up after max_duration', async () => {
 		quaisProvider.getTransactionReceipt.mockResolvedValue(Promise.resolve(null))
 		const max_duration_seconds = 2
-		const result = quais.pollFor(
+		const result = pollFor(
 			quaisProvider,
 			'getTransactionReceipt',
 			['0xInvalid'],

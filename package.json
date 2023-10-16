@@ -1,16 +1,29 @@
 {
   "name": "quais-polling",
+  "type": "module",
   "version": "1.0.0",
-  "description": "",
-  "main": "src/index.js",
-  "scripts": {
-    "test": "jest"
+  "description": "Shim for quais that allows clients to poll for responses",
+  "main": "dist/index.js",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.js",
+      "import": "./dist/index.mjs"
+    }
   },
-  "keywords": [],
-  "author": "",
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest",
+    "build": "tsup src/index.js --format cjs,esm --dts"
+  },
+  "keywords": ["quais", "polling", "blockchain"],
+  "author": "Dominant Strategies",
   "license": "ISC",
   "devDependencies": {
     "jest": "^29.7.0",
+    "tsup": "^7.2.0",
+    "typescript": "^5.2.2"
+  },
+  "dependencies": {
     "quais": "^0.1.14"
   }
 }

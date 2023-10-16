@@ -1,6 +1,4 @@
-const quais = require('quais')
-
-quais.pollFor = async function (
+export const pollFor = async function (
 	provider,
 	methodName,
 	params,
@@ -54,7 +52,6 @@ quais.pollFor = async function (
 				return methodResult
 			}
 		} catch (error) {
-			console.warn(error)
 			if (error.message === 'Promise timeout') {
 				console.log('Request timed out. Retrying...')
 			} else {
@@ -68,5 +65,3 @@ quais.pollFor = async function (
 		await new Promise((resolve) => setTimeout(resolve, pollingInterval))
 	}
 }
-
-module.exports = quais
