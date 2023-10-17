@@ -53,7 +53,7 @@ main();
 
 ## API Reference
 ```
-pollFor(provider, methodName, params, initialPollingInterval, requestTimeout, maxDurationSeconds = 180, maxPollingInterval = 10000)
+pollFor(provider, methodName, params, initial_polling_interval = 60, request_timeout = 30, max_duration = 180, max_polling_interval = 90)
 ```
 Polls for a method's response.
 
@@ -61,10 +61,10 @@ Parameters
 * provider: The Quais provider instance.
 * methodName: Name of the method you're awaiting a response from.
 * params: Parameters to be passed to the method being called.
-* initialPollingInterval: Time (in milliseconds) for the initial interval between polls.
-* requestTimeout: Time (in milliseconds) before the request times out.
-* maxDurationSeconds (optional): Maximum duration (in seconds) before the entire polling process times out. Defaults to 180 seconds.
-* maxPollingInterval (optional): Maximum time (in milliseconds) allowed between polls. Defaults to 10000 milliseconds.
+* initial_polling_interval (optional): Time (in seconds) for the initial interval between polls.
+* request_timeout (optional): Time (in seconds) before the request times out.
+* max_duration (optional): Maximum duration (in seconds) before the entire polling process times out. Defaults to 180 seconds.
+* max_polling_interval (optional): Maximum time (in seconds) allowed between polls. Defaults to 10000 milliseconds.
 
 # Contributing
 We welcome contributions! Please see our contributing guidelines for details.
