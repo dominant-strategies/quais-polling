@@ -2,14 +2,15 @@ export const pollFor = async function (
 	provider,
 	methodName,
 	params,
-	initialPollingInterval,
-	requestTimeout,
-	max_duration_seconds = 180,
-	max_polling_interval = 10000
+	initial_polling_interval = 60,
+	request_timeout = 30,
+	max_duration = 180,
+	max_polling_interval = 90
 ) {
-	const MAX_DURATION = max_duration_seconds * 1000
-	const MAX_POLLING_INTERVAL = Math.max(max_polling_interval, 10000)
-	let pollingInterval = initialPollingInterval
+	const MAX_DURATION = max_duration * 1000
+	const MAX_POLLING_INTERVAL = Math.max(max_polling_interval * 1000, 60000)
+    const requestTimeout = request_timeout * 1000
+	let pollingInterval = initial_polling_interval * 1000
 	let startTime = Date.now()
 	let poll_count = 0
 
