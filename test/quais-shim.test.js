@@ -1,4 +1,4 @@
-import { pollFor } from './../shims/quais-shim.js'
+import { pollFor } from '../src/index.js'
 import { jest } from '@jest/globals'
 
 describe('pollFor', () => {
@@ -21,7 +21,7 @@ describe('pollFor', () => {
 		const expectedResult = 'some-receipt'
 		quaisProvider.getTransactionReceipt.mockResolvedValueOnce(expectedResult)
 
-		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
+		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1, 30)
 
 		expect(result).toBe(expectedResult)
 		expect(quaisProvider.getTransactionReceipt).toHaveBeenCalledWith('0xValid')
@@ -33,20 +33,20 @@ describe('pollFor', () => {
 			.mockRejectedValueOnce(new Error('Promise timeout'))
 			.mockResolvedValueOnce(expectedResult)
 
-		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1000, 30000)
+		const result = await pollFor(quaisProvider, 'getTransactionReceipt', ['0xValid'], 1, 30)
 
 		expect(result).toBe(expectedResult)
 		expect(quaisProvider.getTransactionReceipt).toHaveBeenCalledTimes(2)
 	})
 
 	test('throws error for invalid method name', async () => {
-		await expect(pollFor(quaisProvider, 'invalidMethod', ['0xValid'], 1000, 30000)).rejects.toThrow(
+		await expect(pollFor(quaisProvider, 'invalidMethod', ['0xValid'], 1, 30)).rejects.toThrow(
 			'Invalid method: invalidMethod'
 		)
 	})
 
 	test('throws error for incorrect number of arguments', async () => {
-		await expect(pollFor(quaisProvider, 'getTransactionReceipt', [], 1000, 30000)).rejects.toThrow(
+		await expect(pollFor(quaisProvider, 'getTransactionReceipt', [], 1, 30)).rejects.toThrow(
 			'Incorrect number of arguments provided.'
 		)
 	})
@@ -58,8 +58,8 @@ describe('pollFor', () => {
 			quaisProvider,
 			'getTransactionReceipt',
 			['0xInvalid'],
-			1000,
-			30000,
+			1,
+			30,
 			max_duration_seconds
 		)
 		await expect(result).rejects.toThrow('Maximum polling duration exceeded. Giving up.')

@@ -1,2 +1,6 @@
 node_modules
 quais-polling-1.0.0.tgz
+.DS_Store
+*.conf
+types
+.vscode

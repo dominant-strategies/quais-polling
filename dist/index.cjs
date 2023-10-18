@@ -1,36 +1,14 @@
-var __defProp = Object.defineProperty;
-var __getOwnPropDesc = Object.getOwnPropertyDescriptor;
-var __getOwnPropNames = Object.getOwnPropertyNames;
-var __hasOwnProp = Object.prototype.hasOwnProperty;
-var __export = (target, all) => {
-  for (var name in all)
-    __defProp(target, name, { get: all[name], enumerable: true });
-};
-var __copyProps = (to, from, except, desc) => {
-  if (from && typeof from === "object" || typeof from === "function") {
-    for (let key of __getOwnPropNames(from))
-      if (!__hasOwnProp.call(to, key) && key !== except)
-        __defProp(to, key, { get: () => from[key], enumerable: !(desc = __getOwnPropDesc(from, key)) || desc.enumerable });
-  }
-  return to;
-};
-var __toCommonJS = (mod) => __copyProps(__defProp({}, "__esModule", { value: true }), mod);
+'use strict';
 
-// src/index.js
-var src_exports = {};
-__export(src_exports, {
-  default: () => src_default
-});
-module.exports = __toCommonJS(src_exports);
-
-// src/shims/quais-shim.js
-var pollFor = async function(provider, methodName, params, initialPollingInterval, requestTimeout, max_duration_seconds = 180, max_polling_interval = 1e4) {
-  const MAX_DURATION = max_duration_seconds * 1e3;
-  const MAX_POLLING_INTERVAL = Math.max(max_polling_interval, 1e4);
-  let pollingInterval = initialPollingInterval;
+const pollFor = async function(provider, methodName, params, initial_polling_interval = 60, request_timeout = 30, max_duration = 180, max_polling_interval = 90) {
+  const MAX_DURATION = max_duration * 1e3;
+  const MAX_POLLING_INTERVAL = Math.max(max_polling_interval * 1e3, 6e4);
+  const requestTimeout = request_timeout * 1e3;
+  let pollingInterval = initial_polling_interval * 1e3;
   let startTime = Date.now();
   let poll_count = 0;
   function withTimeout(promise, ms) {
+    console.log("With timeout at poll count: ", poll_count);
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         reject(new Error("Promise timeout"));
@@ -45,12 +23,15 @@ var pollFor = async function(provider, methodName, params, initialPollingInterva
     });
   }
   if (typeof provider[methodName] !== "function") {
+    console.error("Throwing invalid method error");
     throw new Error(`Invalid method: ${methodName}`);
   }
   if (provider[methodName].length !== params.length) {
+    console.error("Throwing incorrect arguments error");
     throw new Error("Incorrect number of arguments provided.");
   }
   while (true) {
+    console.log("Polling started");
     if (Date.now() - startTime > MAX_DURATION) {
       throw new Error("Maximum polling duration exceeded. Giving up.");
     }
@@ -70,6 +51,7 @@ var pollFor = async function(provider, methodName, params, initialPollingInterva
       }
     }
     poll_count += 1;
+    console.log("Poll count: ", poll_count);
     if (poll_count % 5 == 0) {
       pollingInterval = Math.min(2e3 + pollingInterval, MAX_POLLING_INTERVAL);
     }
@@ -77,5 +59,4 @@ var pollFor = async function(provider, methodName, params, initialPollingInterva
   }
 };
 
-// src/index.js
-var src_default = pollFor;
+exports.pollFor = pollFor;
