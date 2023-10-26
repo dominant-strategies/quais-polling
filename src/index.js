@@ -15,7 +15,6 @@ export const pollFor = async function (
 	let poll_count = 0
 
 	function withTimeout(promise, ms) {
-		console.log("With timeout at poll count: ", poll_count)
 		return new Promise((resolve, reject) => {
 			const timer = setTimeout(() => {
 				reject(new Error('Promise timeout'))
@@ -44,7 +43,6 @@ export const pollFor = async function (
 	}
 
 	while (true) {
-		console.log("Polling started")
 		if (Date.now() - startTime > MAX_DURATION) {
 			throw new Error('Maximum polling duration exceeded. Giving up.')
 		}
@@ -64,7 +62,6 @@ export const pollFor = async function (
 			}
 		}
 		poll_count += 1
-		console.log("Poll count: ", poll_count)
 		if (poll_count % 5 == 0) {
 			pollingInterval = Math.min(2000 + pollingInterval, MAX_POLLING_INTERVAL)
 		}
