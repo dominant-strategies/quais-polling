@@ -8,7 +8,6 @@ const pollFor = async function(provider, methodName, params, initial_polling_int
   let startTime = Date.now();
   let poll_count = 0;
   function withTimeout(promise, ms) {
-    console.log("With timeout at poll count: ", poll_count);
     return new Promise((resolve, reject) => {
       const timer = setTimeout(() => {
         reject(new Error("Promise timeout"));
@@ -31,7 +30,6 @@ const pollFor = async function(provider, methodName, params, initial_polling_int
     throw new Error("Incorrect number of arguments provided.");
   }
   while (true) {
-    console.log("Polling started");
     if (Date.now() - startTime > MAX_DURATION) {
       throw new Error("Maximum polling duration exceeded. Giving up.");
     }
@@ -51,7 +49,6 @@ const pollFor = async function(provider, methodName, params, initial_polling_int
       }
     }
     poll_count += 1;
-    console.log("Poll count: ", poll_count);
     if (poll_count % 5 == 0) {
       pollingInterval = Math.min(2e3 + pollingInterval, MAX_POLLING_INTERVAL);
     }
