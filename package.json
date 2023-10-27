@@ -33,7 +33,6 @@
     "typescript": "^5.2.2"
   },
   "dependencies": {
-    "quais": "^0.1.14",
     "unbuild": "^2.0.0"
   }
 }
