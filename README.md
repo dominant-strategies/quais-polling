@@ -1,6 +1,6 @@
-# Quais Polling Shim
+# Quais Polling 
 
-Quais Polling Shim is an extension to the [Quais library](https://github.com/dominant-strategies/quais-5.js), designed to provide an easy and efficient way to poll for responses on the client side. Built on top of Quais, it maintains the simplicity and reliability you're accustomed to, with added polling capabilities.
+Quais Polling is an extension to the [Quais library](https://github.com/dominant-strategies/quais-5.js), designed to provide an easy and efficient way to poll for responses on the client side. Built on top of Quais, it maintains the simplicity and reliability you're accustomed to, with added polling capabilities.
 
 ## Features
 
@@ -11,33 +11,33 @@ Quais Polling Shim is an extension to the [Quais library](https://github.com/dom
 
 ## Installation
 
-Before you install the Quais Polling Shim, make sure you have Quais installed in your project.
+Before you install the Quais Polling, make sure you have Quais installed in your project.
 
 ```
 npm install quais
 ```
 
-Then, you can install Quais Polling Shim using npm:
+Then, you can install Quais Polling using npm:
 
 ```
-npm install quais-polling-shim
+npm install quais-polling
 ```
 
 Or yarn:
 
 ```
-yarn add quais-polling-shim
+yarn add quais-polling
 ```
 
 ## Usage
 Here's a quick example to get you started:
 
 ```
-const { pollFor } = require('quais-polling-shim');
+const { pollFor } = require('quais-polling');
 const quais = require('quais');
 
 async function main() {
-    const provider = new quais.providers.JsonRpcProvider("http://localhost:8545");
+    const provider = new quais.providers.JsonRpcProvider("http://localhost:8610");
     const transactionHash = 'your-transaction-hash';
 
     try {
