@@ -1,7 +1,7 @@
 {
   "name": "quais-polling",
-  "version": "1.0.3",
-  "repository": "dominantstrategies/quais-shim",
+  "version": "1.0.4",
+  "repository": "dominant-strategies/quais-polling",
   "description": "Shim for quais that allows clients to poll for responses",
   "type": "module",
   "exports": {
